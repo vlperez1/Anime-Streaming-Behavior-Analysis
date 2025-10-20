@@ -51,3 +51,87 @@ Example visualization:
 ```python
 sns.barplot(x='type', y='avg_rating', data=anime)
 plt.title('Average Rating by Anime Type')
+
+cat >> README.md << 'EOF'
+
+---
+
+## 🧩 User Segmentation (Clustering)
+
+### 🎯 Objective  
+Group anime users by their rating behavior and genre preferences to uncover viewing personas and support content personalization.
+
+### 🧮 Methodology  
+1. Expanded multi-genre strings into lists and exploded rows.  
+2. Built a **user–genre matrix** (users as rows, genres as columns).  
+3. Scaled features using `StandardScaler`.  
+4. Applied **K-Means clustering** (`n_clusters=5`).  
+5. Interpreted each cluster based on their top 5 average-rated genres.
+
+### 🧠 Cluster Insights
+
+| Cluster | Persona Label | Genre Preference Highlights |
+|----------|----------------|------------------------------|
+| 0 | 🎭 Complex Thinkers | Psychological, Action, Comedy |
+| 1 | 💞 Emotional Adventurers | Supernatural, Adventure, Romance |
+| 2 | ⚔️ Shōnen Core Fans | Action, Fantasy, Ecchi |
+| 3 | 🔎 Social Slice Enthusiasts | Mystery, Comedy, Harem, Drama |
+| 4 | 🎓 Everyday Story Lovers | Drama, Shounen, Slice of Life |
+
+**Interpretation:**  
+Each cluster reveals a unique audience type, which can guide **recommendation strategies**, **UI customization**, and **targeted marketing**.
+
+### 📈 Visualization Example
+```python
+plt.figure(figsize=(12,6))
+sns.heatmap(cluster_summary, cmap="YlGnBu")
+plt.title("Genre Preferences by User Cluster")
+plt.xlabel("Cluster")
+plt.ylabel("Genre")
+plt.show()
+
+### 🤖 2️⃣ Recommendation Engine Prototype Section
+```bash
+cat >> README.md << 'EOF'
+
+---
+
+## 🤖 Recommendation Engine Prototype
+
+### 🎯 Objective  
+Build a simple recommendation system using **collaborative filtering** to suggest similar anime titles based on user rating patterns.
+
+### 🧮 Methodology  
+1. Created a **User–Anime matrix** from `user_id` × `anime_name`.  
+2. Filled missing ratings with zeros.  
+3. Computed **cosine similarity** between anime titles.  
+4. Built a function to return the top 5 similar titles.
+
+### 💻 Example Code
+```python
+def recommend_anime(title, n=5):
+    if title not in similarity_df.columns:
+        return "Anime not found in dataset."
+    similar_scores = similarity_df[title].sort_values(ascending=False)[1:n+1]
+    return similar_scores
+
+## 🧪 3️⃣ A/B Testing Simulation Section
+```bash
+cat >> README.md << 'EOF'
+
+---
+
+## 🧪 A/B Testing Simulation — Subbed vs Dubbed Engagement
+
+### 🎯 Objective  
+Evaluate whether *Subbed* or *Dubbed* anime achieves higher completion rates and user engagement.
+
+### 🧮 Methodology  
+- Simulated **5,000 users** divided evenly between “Subbed” and “Dubbed.”  
+- Modeled completion rates as normal distributions with different means.  
+- Performed an **independent t-test** to assess statistical significance.  
+
+### 💻 Example Code
+```python
+t_stat, p_value = stats.ttest_ind(subbed, dubbed)
+print(f"T-statistic: {t_stat:.3f}, P-value: {p_value:.4f}")
